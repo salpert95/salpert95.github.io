@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Steven Alpert | Tickety</title>
+        <meta name="author" content="Steven Alpert">
+        <meta name="description" content="Steven Alpert's Personal Website">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">
+        <link rel="manifest" href="images/favicon/site.webmanifest">
+        <!--<link rel="stylesheet" href="style.css">--> 
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <![endif]-->
+        <style>
+        /*Steven, Buddy, it's yourself speaking, remember that time you created style.css to avoid having a mess of in-page CSS? Consider using it before you put anything here :^) K THX BAI*/
+        </style>
+    <script type="text/javascript">
+        var cvtname = "Steven Alpert";
+        var cvtphone = "fillphone";
+        var cvtemail = "fillemail";
+        function mecontact(){
+            if(document.getElementById("tickety.cvtech.contact").checked){
+                document.getElementById("incident.u_key_name").value = cvtname;
+                document.getElementById("incident.u_call_back_number").value = cvtphone;
+                document.getElementById("incident.u_key_email").value = cvtemail
+            }
+
+        }
+        function merequestor(){
+            if(document.getElementById("tickety.cvtech.requestor").checked){
+                document.getElementById("incident.u_requestors_name").value = cvtname;
+                document.getElementById("incident.u_requestor_phone").value = cvtphone;
+                document.getElementById("incident.u_requestor_email").value = cvtemail
+            }
+        }
+        
+        
+        function contactinfo(cvtname, cvtphone, cvtemail){
+            //alert("Your Name is" + cvtname + "<br>your phone number is" +cvtphone+ "<br>Your email is" +cvtemail
+            );
+                                }
+        contactinfo("Adrian Vargas", "tba phone", "tba email");
+        contactinfo("Alejandro Sanchez", "tba phone", "tba email");
+        contactinfo("Chris Marth", "tba phone", "tba email");
+        contactinfo("Dylan Grady", "tba phone", "tba email");
+        contactinfo("Hector Ramirez", "tba phone", "tba email");
+        contactinfo("Juan Robles", "tba phone", "tba email");
+        contactinfo("Kyle Randolph", "tba phone", "tba email");
+        contactinfo("Sandee Charles", "tba phone", "tba email");
+        contactinfo("Sheri Renaud", "tba phone", "tba email");
+        contactinfo("Spencer Drake", "tba phone", "tba email");
+        contactinfo("Steven Alpert", "tba phone", "tba email");
+
+
+    </script>
+
+    </head>
+    <body>
+        <main id="frontpagemain">
+            <article>
+                <h1>Ticket Generator</h1>
+                <form action="/action_page.php" method="get">
+                    <table>
+                        <tr id="TechName">
+                            <td>
+                                <label id="tickety.cvtech"> CV Tech:</label>
+                            </td>
+                            <td>
+                                <select id="tickety.cvtech" type="search" placeholder="CVTech" onchange="contactinfo();" required>
+                                    <option value=""></option>
+                                    <option value="Adrian">Adrian V.</option>
+                                    <option value="Alejandro">Alejandro S.</option>
+                                    <option value="Chris">Chris M.</option>
+                                    <option value="Dylan">Dylan G.</option>
+                                    <option value="Hector">Hector R.</option>
+                                    <option value="Juan">Juan R.</option>
+                                    <option value="Kyle">Kyle R.</option>
+                                    <option value="Sandee">Sandee C.</option>
+                                    <option value="Sheri">Sheri R.</option>
+                                    <option value="Spencer">Spencer D.</option>
+                                    <option value="Steven">Steven A.</option>
+                                </select>
+                               
+                            </td>
+                        </tr>
+                        <tr id="contactcontrols">
+                            <td>
+                                <label id="tickety.cvtech.contact.label"> Me as Contact:</label>
+                                <input id="tickety.cvtech.contact" type="checkbox" placeholder="Caller" required>
+                            </td>
+                            <td>
+                                <label id="tickety.cvtech.requestor.label"> Me as requestor:</label>
+                                <input id="tickety.cvtech.requestor" type="checkbox" placeholder="Caller" required>
+                            </td>
+                        </tr>
+                        <tr id="StoreNumber">
+                            <td>
+                                <label id="sys_display.incident.caller_id"> Caller*:</label>
+                            </td>
+                            <td>
+                                <input id="sys_display.incident.caller_id" type="search" placeholder="Caller" required>
+                            </td>
+                        </tr>
+                        <tr id ="ContactName">
+                            <td>
+                                <label id=""> Contact Name:</label>
+                            </td>
+                            <td>
+                                <input id="incident.u_key_name" type="search" placeholder="Your Name"><br>
+                            </td>
+                        </tr>
+                        <tr id="ContactPhone">
+                            <td>
+                                <label id=""> Contact Phone:</label>
+                            </td>
+                            <td>
+                                <input id="incident.u_call_back_number" type="search" placeholder="Your Phone"><br>
+                            </td>
+                        </tr>
+                        <tr id="ContactEmail">
+                            <td>
+                                <label id="">Contact Email:</label>
+                            </td>
+                            <td>
+                                <input id="incident.u_key_email" type="search" placeholder="Your Email"><br>
+                            </td>
+                        </tr>
+                        <tr id="RequestorName">
+                            <td>
+                                <label id="">Requestor Name:</label>
+                            </td>
+                            <td>
+                                <input id="incident.u_requestors_name" type="search" placeholder="Requester Name"><br>
+                            </td>
+                        </tr>
+                        <tr id="RequestorPhone">
+                            <td>
+                                <label id="">Requestor Phone:</label>
+                            </td>
+                            <td>
+                                <input id="incident.u_requestor_phone" type="search" placeholder="Requester Phone"><br>
+                            </td>
+                        </tr>
+                        <tr id="RequestorEmail">
+                            <td>
+                                <label id="">Requestor Email:</label>
+                            </td>
+                            <td>
+                                <input id="incident.u_requestor_email" type="search" placeholder="Requester Email"><br>
+                            </td>
+                        </tr>
+                        <tr id="Category">
+                            <td>
+                                <label id="">Category*:</label>
+                            </td>
+                            <td>
+                                <input id="sys_display.incident.u_category" type="search" placeholder="Category" required ><br>
+                            </td>
+                        </tr>
+                    </table>
+                    <textarea name="long description" rows="3" cols="37" placeholder="description"></textarea><br>
+                    <input type="submit" value="Submit">
+                    <a href="https://littlecaesarsprod.service-now.com/incident.do?sys_id=-1&sysparm_query=active=true^u_lce_ticket_type=CV Ticket&sysparm_view=cv_ticket&sysparm_stack=incident_list.do?sysparm_query=active=true^u_lce_ticket_type=CV Ticket">New CV Ticket</a>
+                </form>
+            </article>
+        </main>
+    </body>
+</html>
