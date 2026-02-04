@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Management Dashboard</title>
+    <style>
+        :root {
+            --primary-color: #ff6600; /* Little Caesars Orange */
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--primary-color);
+        }
+
+        /* Search Bar */
+        #searchInput {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        /* Responsive Table Wrapper */
+        .table-wrapper {
+            overflow-x: auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px; /* Prevents squishing on tiny screens */
+        }
+
+        th, td {
+            text-align: left;
+            padding: 14px;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: #f8f8f8;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Link Buttons */
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            background: #e9ecef;
+            color: #007bff;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-stools { color: #28a745; }
+        .btn-stools:hover { background: #28a745; color: white; }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            th, td { padding: 10px 8px; font-size: 14px; }
+            .btn { padding: 8px 10px; display: block; text-align: center; margin-bottom: 4px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Store Support Dashboard</h2>
+    
+    <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Search for Store ID or Serial...">
+
+    <div class="table-wrapper">
+        <table id="storeTable">
+            <thead>
+                <tr>
+                    <th>Store #</th>
+                    <th>Site ID</th>
+                    <th>ConnectWise</th>
+                    <th>Meraki Switch <br>(Phone1)</th>
+                    <th>Tools</th>
+                    <th>Amino</th>
+                </tr>
+            </thead>
+            <tbody>    
+                    <tr>
+                        <td>1605</td>  
+                        <td>0000350</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0000350-"target="_blank" class="btn">1605 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1605/n/xBpfeaDc/manage/nodes/new_list/13803405278560/ports/19?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/350/tools"target="_blank" class="btn btn-stools">STools</a></td>       
+                        <td><a href="https://resolve.amino-orchestrate.com/resolve/#device/remoteScreen?esn=112-12154522" target="_blank" class="btn">112-12154522</a></td>
+                    </tr>
+                    <tr>
+                        <td>1614</td>  
+                        <td>0000359</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0000359-"target="_blank" class="btn">1614 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1614/n/QbgG5dDc/manage/nodes/new_list/224971437434261/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a> </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/359/tools"target="_blank" class="btn btn-stools">STools</a></td>     
+                        <td><a href="https://resolve.amino-orchestrate.com/resolve/#device/remoteScreen?esn=112-12154805" target="_blank" class="btn">112-12154805 </a></td>
+                    </tr>
+                    <tr>
+                        <td>1617</td>  
+                        <td>0000362</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0000362-"target="_blank" class="btn">1617 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1617/n/BYF3UcDc/manage/nodes/new_list/224971437652621/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a> </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/362/tools"target="_blank" class="btn btn-stools">STools</a></td>
+                        <td><a href="https://resolve.amino-orchestrate.com/resolve/#device/remoteScreen?esn=112-12154278" target="_blank" class="btn">112-12154278 </a></td>      
+                    </tr>
+                    <tr>
+                        <td>1627</td>  
+                        <td>0000372</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0000372-"target="_blank" class="btn">1627 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1627/n/pdmBqdDc/manage/nodes/new_list/13803404842488/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/372/tools"target="_blank" class="btn btn-stools">STools</a></td>     
+                    </tr>
+                    <tr>
+                        <td>1643</td>  
+                        <td>0000388</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0000388-"target="_blank" class="btn">1643 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1643/n/3HTC0aDc/manage/nodes/new_list/48649295260715/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/388/tools"target="_blank" class="btn btn-stools">STools</a></td>     
+                    </tr>
+                    <tr>
+                        <td>1648</td>  
+                        <td>0000393</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0000393-"target="_blank" class="btn">1648 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1648/n/iuyIxaDc/manage/nodes/new_list/273358170724920/ports/19?timespan=604800"target="_blank" class="btn">phone 1</a> </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/393/tools"target="_blank" class="btn btn-stools">STools</a></td>     
+                    </tr>
+                    <tr>
+                        <td>1650</td>  
+                        <td>0000395</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0000395-"target="_blank" class="btn">1650 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1650/n/flB00cDc/manage/nodes/new_list/57548236582042/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/395/tools"target="_blank" class="btn btn-stools">STools</a></td>     
+                    </tr>
+                    <tr>
+                        <td>1651</td>  
+                        <td>0000396</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0000396-"target="_blank" class="btn">1651 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1651/n/fmb7TdDc/manage/nodes/new_list/13803405259930/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/396/tools"target="_blank" class="btn btn-stools">STools</a></td>     
+                    </tr>
+                    <tr>
+                        <td>1679</td>  
+                        <td>0000422</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0000422-"target="_blank" class="btn">1679 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1679/n/AuS5eaDc/manage/nodes/new_list/13803405219160/ports/19?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/422/tools"target="_blank" class="btn btn-stools">STools</a></td>     
+                    </tr>
+                    <tr>
+                        <td>1687</td>  
+                        <td>0003927</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0003927-"target="_blank" class="btn">1687 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1687/n/QvL-cbDc/manage/nodes/new_list/13803404848128/ports/17?timespan=604800"target="_blank" class="btn">phone 1</a>   </td
+                            ><td><a href="https://supporttools.littlecaesars.com/store/3927/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                        </tr>
+                    <tr>
+                        <td>1691</td>  
+                        <td>0001700</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0001700-"target="_blank" class="btn">1691 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1691/n/e1dbtbDc/manage/nodes/new_list/13803405235846/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/1700/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1694</td>  
+                        <td>0006790</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0006790-"target="_blank" class="btn">1694 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1694/n/7nbmtaDc/manage/nodes/new_list/13803404841408/ports/17?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/6790/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1695</td>  
+                        <td>0006931</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0006931-"target="_blank" class="btn">1695 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1695/n/Ei2dbbDc/manage/nodes/new_list/13803405301834/ports/19?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/6931/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1696</td>  
+                        <td>0006941</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0006941-"target="_blank" class="btn">1696 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1696/n/wKmDzbDc/manage/nodes/new_list/13803405277480/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/6941/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1702</td>  
+                        <td>0001933</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0001933-"target="_blank" class="btn">1702 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1702/n/wK9OgcDc/manage/nodes/new_list/13803405254800/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/1933/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1703</td>  
+                        <td>0005195</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0005195-"target="_blank" class="btn">1703 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1703/n/WkQ2kcDc/manage/nodes/new_list/13803405223318/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/5195/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1704</td>  
+                        <td>0001822</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0001822-"target="_blank" class="btn">1704 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1704/n/Ia5IucDc/manage/nodes/new_list/224971437896368/ports/19?timespan=604800"target="_blank" class="btn">phone 1</a> </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/1822/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1705</td>  
+                        <td>0001823</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0001823-"target="_blank" class="btn">1705 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1705/n/nxQX1bDc/manage/nodes/new_list/13803405282070/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/1823/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1706</td>  
+                        <td>0001830</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0001830-"target="_blank" class="btn">1706 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1706/n/eP0QDcDc/manage/nodes/new_list/13803404850738/ports/17?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/1830/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1707</td>  
+                        <td>0005155</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0005155-"target="_blank" class="btn">1707 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1707/n/yLlFYdDc/manage/nodes/new_list/13803404842008/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/5155/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1708</td>  
+                        <td>0005257</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0005257-"target="_blank" class="btn">1708 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1708/n/Nx1YfcDc/manage/nodes/new_list/13803404820048/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/5257/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1709</td>  
+                        <td>0001831</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0001831-"target="_blank" class="btn">1709 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1709/n/IAmLldDc/manage/nodes/new_list/13803405241192/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/1831/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1710</td>  
+                        <td>0001834</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0001834-"target="_blank" class="btn">1710 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1710/n/3MgK7cDc/manage/nodes/new_list/13803405268300/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/1834/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1711</td>  
+                        <td>0007574</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0007574-"target="_blank" class="btn">1711 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1711/n/wNnd9aDc/manage/nodes/new_list/13803405247402/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/7574/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1713</td>  
+                        <td>0008083</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0008083-"target="_blank" class="btn">1713 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1713/n/YfMHgbDc/manage/nodes/new_list/57548248464204/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/8083/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1714</td>  
+                        <td>0008125</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0008125-"target="_blank" class="btn">1714 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1714/n/9k6mOaDc/manage/nodes/new_list/13803405289738/ports/19?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/8125/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1716</td>  
+                        <td>0008185</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0008185-"target="_blank" class="btn">1716 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1716/n/Rr4bWaDc/manage/nodes/new_list/189218148024362/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a> </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/8185/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1717</td>  
+                        <td>0008191</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0008191-"target="_blank" class="btn">1717 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1717/n/6Rn7gaDc/manage/nodes/new_list/48649295281667/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/8191/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1719</td>  
+                        <td>0008212</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0008212-"target="_blank" class="btn">1719 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1719/n/CNRKCdDc/manage/nodes/new_list/167231144165747/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a> </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/8212/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1720</td>  
+                        <td>0008226</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0008226-"target="_blank" class="btn">1720 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1720/n/0P86maDc/manage/nodes/new_list/13803405241516/ports/19?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/8226/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1722</td>  
+                        <td>0008398</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0008398-"target="_blank" class="btn">1722 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1722/n/qx_7ScDc/manage/nodes/new_list/13803405270082/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/8398/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1723</td>  
+                        <td>0008320</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0008320-"target="_blank" class="btn">1723 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1723/n/s_6rQaDc/manage/nodes/new_list/224971437231218/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a> </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/8320/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1724</td>  
+                        <td>0008300</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0008300-"target="_blank" class="btn">1724 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1724/n/JLg1DdDc/manage/nodes/new_list/13803405260146/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/8300/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1727</td>  
+                        <td>0008582</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0008582-"target="_blank" class="btn">1727 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1727/n/IXXhgaDc/manage/nodes/new_list/13803404830068/ports/17?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/8582/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1728</td>  
+                        <td>0008574</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0008574-"target="_blank" class="btn">1728 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1728/n/hZTWDdDc/manage/nodes/new_list/224971437982652/ports/19?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/8574/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1730</td>  
+                        <td>0008521</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0008521-"target="_blank" class="btn">1730 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1730/n/dACVSdDc/manage/nodes/new_list/13803405204742/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/8521/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1731</td>  
+                        <td>0008587</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0008587-"target="_blank" class="btn">1731 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1731/n/iy7fUaDc/manage/nodes/new_list/13803404849358/ports/17?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/8587/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1733</td>  
+                        <td>0008623</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0008623-"target="_blank" class="btn">1733 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1733/n/1WGZxcDc/manage/nodes/new_list/13803404829288/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/8623/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1734</td>  
+                        <td>0008613</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0008613-"target="_blank" class="btn">1734 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1734/n/Zgpp3aDc/manage/nodes/new_list/13803404816298/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/8613/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1736</td>  
+                        <td>0008744</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0008744-"target="_blank" class="btn">1736 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1736/n/1O_S6aDc/manage/nodes/new_list/13803405291736/ports/19?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/8744/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1738</td>  
+                        <td>0008747</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0008747-"target="_blank" class="btn">1738 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1738/n/sOdjxcDc/manage/nodes/new_list/13803405266464/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/8747/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1739</td>  
+                        <td>0008734</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0008734-"target="_blank" class="btn">1739 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1739/n/pICAjaDc/manage/nodes/new_list/224971437784856/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a> </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/8734/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1744</td>  
+                        <td>0008986</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0008986-"target="_blank" class="btn">1744 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1744/n/4OXRvcDc/manage/nodes/new_list/13803404837538/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/8986/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1745</td>  
+                        <td>0008964</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0008964-"target="_blank" class="btn">1745 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1745/n/ZMZ6JaDc/manage/nodes/new_list/13803404836188/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/8964/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1747</td>  
+                        <td>0009085</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0009085-"target="_blank" class="btn">1747 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1747/n/EUxpnbDc/manage/nodes/new_list/13803404837208/ports/17?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/9085/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1748</td>  
+                        <td>0009113</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0009113-"target="_blank" class="btn">1748 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1748/n/xcgg8dDc/manage/nodes/new_list/13803404825748/ports/17?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/9113/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1750</td>  
+                        <td>0010427</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0010427-"target="_blank" class="btn">1750 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1750/n/rigyocDc/manage/nodes/new_list/13803405271378/ports/19?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/10427/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1751</td>  
+                        <td>0009681</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0009681-"target="_blank" class="btn">1751 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1751/n/Jx3ArbDc/manage/nodes/new_list/189218147206284/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a> </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/9681/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1752</td>  
+                        <td>0010376</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0010376-"target="_blank" class="btn">1752 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1752/n/_-QCecDc/manage/nodes/new_list/13803404822718/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/10376/tools"target="_blank" class="btn btn-stools">STools</a></td>     
+                    </tr>
+                    <tr>
+                        <td>1753</td>  
+                        <td>0010772</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0010772-"target="_blank" class="btn">1753 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1753/n/SgJKobDc/manage/nodes/new_list/13803405159180/ports/19?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/10772/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1754</td>  
+                        <td>0011336</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0011336-"target="_blank" class="btn">1754 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1754/n/_64DGcDc/manage/nodes/new_list/119587761380416/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a> </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/11336/tools"target="_blank" class="btn btn-stools">STools</a></td>      
+                    </tr>
+                    <tr>
+                        <td>1755</td>  
+                        <td>0011463</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0011463-"target="_blank" class="btn">1755 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1755/n/58byEbDc/manage/nodes/new_list/189218147977436/ports/19?timespan=604800"target="_blank" class="btn">phone 1</a> </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/11463/tools"target="_blank" class="btn btn-stools">STools</td>      
+                    </tr>
+                    <tr>
+                        <td>1756</td>  
+                        <td>0011577</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0011577-"target="_blank" class="btn">1756 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1756/n/rpYK_cDc/manage/nodes/new_list/224971437017628/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a> </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/11577/tools"target="_blank" class="btn btn-stools">STools</td>      
+                    </tr>
+                    <tr>
+                        <td>1757</td>  
+                        <td>0011614</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0011614-"target="_blank" class="btn">1757 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1757/n/KaUOnaDc/manage/nodes/new_list/189218147971334/ports/19?timespan=604800"target="_blank" class="btn">phone 1</a> </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/11614/tools"target="_blank" class="btn btn-stools">STools</td>      
+                    </tr>
+                    <tr>
+                        <td>1758</td>  
+                        <td>0011861</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0011861-"target="_blank" class="btn">1758 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1758/n/2WVXQaDc/manage/nodes/new_list/189218147994122/ports/19?timespan=604800"target="_blank" class="btn">phone 1</a> </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/11861/tools"target="_blank" class="btn btn-stools">STools</td>      
+                    </tr>
+                    <tr>
+                        <td>1759</td>  
+                        <td>0011749</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0011749-"target="_blank" class="btn">1759 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1759/n/CLx-_bDc/manage/nodes/new_list/189218147994554/ports/19?timespan=604800"target="_blank" class="btn">phone 1</a> </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/11749/tools"target="_blank" class="btn btn-stools">STools</td>      
+                    </tr>
+                    <tr>
+                        <td>1760</td>  
+                        <td>0011813</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0011813-"target="_blank" class="btn">1760 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1760/n/QdnCOaDc/manage/nodes/new_list/189218147989856/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a> </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/11813/tools"target="_blank" class="btn btn-stools">STools</td>      
+                    </tr>
+                    <tr>
+                        <td>1761</td>  
+                        <td>0012059</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0012059-"target="_blank" class="btn">1761 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1761/n/izINpbDc/manage/nodes/new_list/13803405344926/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a>  </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/12059/tools"target="_blank" class="btn btn-stools">STools</td>      
+                    </tr>
+                    <tr>
+                        <td>1765</td>  
+                        <td>0020498</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0020498-"target="_blank" class="btn">1765 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1765/n/_bxQ1cDc/manage/nodes/new_list/224971437097976/ports/19?timespan=604800"target="_blank" class="btn">phone 1</a> </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/20498/tools"target="_blank" class="btn btn-stools">STools</td>       
+                    </tr>
+                    <tr>
+                        <td>1767</td>  
+                        <td>0021284</td>   
+                        <td><a href="https://littlecaesars.screenconnect.com/Host#Access/All%20Machines/0021284-"target="_blank" class="btn">1767 CW</a></td>
+                        <td><a href="https://n157.meraki.com/0001-1767/n/O6Wq9cDc/manage/nodes/new_list/101181110430362/ports/18?timespan=604800"target="_blank" class="btn">phone 1</a> </td>
+                        <td><a href="https://supporttools.littlecaesars.com/stores/21284/tools"target="_blank" class="btn btn-stools">STools</td>       
+                    </tr>
+                </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+function filterTable() {
+  var input, filter, table, tr, td, i, j, txtValue;
+  input = document.getElementById("searchInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("storeTable");
+  tr = table.getElementsByTagName("tr");
+
+  for (i = 1; i < tr.length; i++) {
+    tr[i].style.display = "none";
+    td = tr[i].getElementsByTagName("td");
+    for (j = 0; j < td.length; j++) {
+      if (td[j]) {
+        txtValue = td[j].textContent || td[j].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+          break;
+        }
+      }
+    }
+  }
+}
+</script>
+
+</body>
+</html>
